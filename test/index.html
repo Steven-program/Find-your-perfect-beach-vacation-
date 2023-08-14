@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <script>
+            let link = 'https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/1/query?outFields=*&where=1%3D1&f=geojson';
+            fetch(link, {mode: 'cors'})
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(response) {
+                console.log(response);
+              });
+          </script>
+    </body>
+</html>
