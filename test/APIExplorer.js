@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const { fetch, setGlobalDispatcher, Agent } = require('undici')
 const cors = require('cors');
 
+const apiKey = process.env.API_KEY;
+
 async function mainQuerry(client) {
     const query = {
         PETS_ALLOWED: "Yes",
@@ -128,7 +130,7 @@ async function main(app) {
             //remember to turn this off later so that you avoid API Costs
             // Construct the URL for the Nearby Search request
             const { latitude, longitude } = await req.body;
-            const apiKey = 'AIzaSyCACq2d57S_JUpmUOWBWvENc8GHnkHP89k';
+            //const apiKey = 'AIzaSyCACq2d57S_JUpmUOWBWvENc8GHnkHP89k';
             const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=beach&location=${latitude},${longitude}&radius=1500&key=${apiKey}`;
 
             fetch(url)
