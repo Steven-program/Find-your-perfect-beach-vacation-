@@ -31,7 +31,7 @@ async function main(app) {
 
             client.db("full_data").collection("access").find().limit(2189).forEach(function (myDoc) {
                 let newDistance = 0;
-                let api_key = "AIzaSyAmIrBNJgpXAgLbwEOOnYEdh1Mpnqq_zgA";
+                let api_key = "apiKey";
                 let google_maps = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${myDoc.Y_LATITUDE},${myDoc.X_LONGITUDE}&origins=${latitude},${longitude}&key=${api_key}`;
                 //console.log(google_maps);
                 const arr = [];
