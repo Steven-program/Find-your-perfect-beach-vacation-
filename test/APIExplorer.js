@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const { fetch, setGlobalDispatcher, Agent } = require('undici')
 const cors = require('cors');
 
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../test/.env') })
+
 const apiKey = process.env.API_KEY;
 
 async function mainQuerry(client) {
@@ -130,9 +133,9 @@ async function main(app) {
             //remember to turn this off later so that you avoid API Costs
             // Construct the URL for the Nearby Search request
             const { latitude, longitude } = await req.body;
-            //const apiKey = 'AIzaSyCACq2d57S_JUpmUOWBWvENc8GHnkHP89k';
+            
             const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=beach&location=${latitude},${longitude}&radius=1500&key=${apiKey}`;
-
+            console.log(url);
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -146,14 +149,14 @@ async function main(app) {
                             const placeId = place.place_id;
 
                             const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${apiKey}`;
-
+                           
                             fetch(detailsUrl)
                                 .then(response => response.json())
                                 .then(placeData => {
                                     if (placeData.status === 'OK' && placeData.result.photos && placeData.result.photos.length > 0) {
                                         const photoReference = placeData.result.photos[0].photo_reference;
                                         const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
-
+                                        
                                         const returnObject = {
                                             rating: place.rating,
                                             numRatings: place.user_ratings_total,
@@ -166,14 +169,14 @@ async function main(app) {
                                     console.error('Error fetching place details:', error);
                                 });
                         } else {
-                            //res.json('Error retrieving reviews');
+                            console.log('Error retrieving reviews');
                         }
                     } else {
-                        //res.json('Error retrieving reviews');
+                        console.log('Error retrieving reviews');
                     }
                 })
                 .catch(error => {
-                    //res.json('Error retrieving reviews');
+                   console.log('Error retrieving reviews');
                 });
 
         });
